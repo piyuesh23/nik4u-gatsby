@@ -1,13 +1,12 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
-const transliteration = require('transliteration')
 
 // Create a slug for each article and set it as a field on the node.
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
   if (node.internal.type === `node__article`) {
-    const slugFragment = transliteration.slugify(node.title)
-    const slug = `/article/${slugFragment}/`
+    const slugFragment = node.path.alias
+    const slug = `/${slugFragment}`
     createNodeField({
       node,
       name: `slug`,
